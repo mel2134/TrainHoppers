@@ -10,6 +10,9 @@ namespace TrainHoppers.Data
 {
     public class TrainHoppersContext : DbContext
     {
+        public TrainHoppersContext(DbContextOptions<TrainHoppersContext> options) : base(options) {
+
+        }
         public DbSet<Ability> Abilities { get; set; }
     }
 }

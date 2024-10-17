@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TrainHoppers.Data\TrainHoppers.Data.csproj" />
+  </ItemGroup>
+
 </Project>
