@@ -16,7 +16,7 @@
         public string AbilityName { get; set; }
         public double AbilityDamage { get; set; }
         public string AbilityDescription { get; set; }
-        public int LevelNeededToBeUsed { get; set; }
+        public int AbilityLevel { get; set; }
         public AbilityType AbilityType { get; set; }
         public List<AbilitySideEffects> SideEffects { get; set; }
     }

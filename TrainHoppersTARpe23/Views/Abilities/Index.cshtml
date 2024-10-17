@@ -1,1 +1,35 @@
-﻿
+﻿@model IEnumerable<TrainHoppersTARpe23.Models.Abilities.AbilityIndexViewModel>
+
+@{
+    int rowNumber = 1;
+}
+<div><a asp-action="Add" asp-controller="Titans" type="submit" class="btn btn-primary">Get a new ability</a></div>
+<div class="h1">Your abilities</div>
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Level</th>
+                <th scope="col">Recharge Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ability in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@ability.AbilityName</td>
+                    <td>@ability.AbilityType</td>
+                    <td>@ability.AbilityLevel</td>
+                    <td>@ability.AbilityRechargeTime</td>
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+</form>
+@*Missing button for player profile*@
+@*Missing button for player fight history*@
