@@ -17,16 +17,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var ability in Model)
+            @if (Model != null)
             {
-                <tr>
-                    <td>@rowNumber</td>
-                    <td>@ability.AbilityName</td>
-                    <td>@ability.AbilityType</td>
-                    <td>@ability.AbilityLevel</td>
-                    <td>@ability.AbilityRechargeTime</td>
-                </tr>
-                rowNumber++;
+                foreach (var ability in Model)
+                {
+                    <tr>
+                        <td>@rowNumber</td>
+                        <td>@ability.AbilityName</td>
+                        <td>@ability.AbilityType</td>
+                        <td>@ability.AbilityLevel</td>
+                        <td>@ability.AbilityRechargeTime</td>
+                    </tr>
+                    rowNumber++;
+                }
             }
         </tbody>
     </table>

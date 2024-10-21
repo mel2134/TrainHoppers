@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrainHoppers.ApplicationServices\TrainHoppers.ApplicationServices.csproj" />
     <ProjectReference Include="..\TrainHoppers.Data\TrainHoppers.Data.csproj" />
   </ItemGroup>
 

@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using TrainHoppers.ApplicationServices.Services;
+using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAbilitiesServices, AbilitiesServices> ();
 builder.Services.AddDbContext<TrainHoppersContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
