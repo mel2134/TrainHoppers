@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
 using TrainHoppersTARpe23.Models.Abilities;
@@ -33,6 +34,33 @@ namespace TrainHoppersTARpe23.Controllers
         {
             AbilityCreateViewModel vm = new();
             return View("Create",vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(AbilityCreateViewModel vm)
+        {
+            var dto = new AbilityDto()
+            {
+                AbilityName = vm.AbilityName,
+                AbilityDescription = vm.AbilityDescription,
+                AbilityXP = 0,
+                AbilityXPUntilNextLevel = 25,
+                AbilityLevel = 0,
+                AbilityRechargeTime = vm.AbilityRechargeTime,
+                AbilityUseTime = vm.AbilityUseTime,
+                AbilityStatus = (TrainHoppers.Core.Dto.AbilityStatus)vm.AbilityStatus,
+                AbilityType = (TrainHoppers.Core.Dto.AbilityType)vm.AbilityType,
+                SideEffects = vm.SideEffects,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Files = vm.Files,
+                Image = vm.Image.Select(x => new FileToDatabaseDto { ID = x.ImageID,ImageData = x.ImageData, ImageTitle = x.ImageTitle,AbilityID = x.AbilityID}).ToArray()
+
+            };
+            var result = await _abilitiesServices.Create(dto);
+            if(result == null)
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }
