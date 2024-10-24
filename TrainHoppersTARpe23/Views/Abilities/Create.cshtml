@@ -1,0 +1,85 @@
+﻿@model TrainHoppersTARpe23.Models.Abilities.AbilityCreateViewModel
+
+<div>
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="CreatedAt" type="hidden"/>
+        <input asp-for="UpdatedAt" type="hidden"/>
+        <input asp-for="AbilityXP" value="0" type="hidden" />
+        <input asp-for="AbilityXPUntilNextLevel" value="25" type="hidden" />
+        <input asp-for="AbilityLevel" value="1" type="hidden" />
+        <input asp-for="AbilityStatus" value="Ready" type="hidden" />
+
+        <div class="form-group-row">
+            <label asp-for="AbilityName" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="AbilityName" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="AbilityDescription" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="AbilityDescription" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="AbilityType" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="AbilityType" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="AbilityUseTime" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="AbilityUseTime" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="AbilityRechargeTime" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="AbilityRechargeTime" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="SideEffects" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="SideEffects" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group-row">
+            <label asp-for="Files" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-5">
+                <div class="custom-file">
+                    <input class="form-control custom-file-input" 
+                    asp-for="Files" multiple type="file"/>
+                    <label class="custom-file-label">Choose Image</label>
+                </div>
+            </div>
+        </div>
+        <a asp-action="Create" asp-controller="Abilities" type="submit" class="btn btn-primary" value="Create Ability">Create Ability</a>
+        <a asp-action="Index" class="btn btn-primary">Cancel</a>
+        
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileLabel = $(this).next('.custom-file-input');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    fileLabel.html(files.length + ' files selected');
+                }
+                else if (files.length == 1) {
+                    fileLabel.html(files[0].name);
+                }
+            });
+        });
+    </script>
+}

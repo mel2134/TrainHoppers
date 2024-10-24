@@ -28,5 +28,11 @@ namespace TrainHoppersTARpe23.Controllers
                 });
             return View();
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            AbilityCreateViewModel vm = new();
+            return View("Create",vm);
+        }
     }
 }
