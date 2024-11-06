@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainHoppers.Core.Domain;
+using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
 
@@ -13,12 +14,13 @@ namespace TrainHoppers.ApplicationServices.Services
     public class AbilitiesServices : IAbilitiesServices
     {
         private readonly TrainHoppersContext _context;
+        private readonly IFileServices _fileServices;
         // private readonly IFileServices _fileServices
 
-        public AbilitiesServices(TrainHoppersContext context/*, IFileServices fileServices*/)
+        public AbilitiesServices(TrainHoppersContext context, IFileServices fileServices)
         {
             _context = context;
-            // _fileServices = fileServices
+            _fileServices = fileServices;
         }
 
         /// <summary>
@@ -31,6 +33,34 @@ namespace TrainHoppers.ApplicationServices.Services
             var result = await _context.Abilities
                 .FirstOrDefaultAsync(x => x.ID == id);
             return result;
+        }
+
+        public async Task<Ability> Create(AbilityDto dto)
+        {
+            Ability ability = new();
+            ability.ID = Guid.NewGuid();
+            ability.AbilityXP = 0;
+            ability.AbilityXPUntilNextLevel = 25;
+            ability.AbilityLevel = 0;
+            ability.AbilityStatus = Core.Domain.AbilityStatus.Ready;
+            ability.AbilityDescription = dto.AbilityDescription;
+            ability.AbilityName = dto.AbilityName;
+            ability.AbilityUseTime = dto.AbilityUseTime;
+            ability.AbilityRechargeTime = dto.AbilityRechargeTime;
+
+            //ability.SideEffects = dto.SideEffects;
+            ability.AbilityType = (Core.Domain.AbilityType)dto.AbilityType;
+            ability.CreatedAt = DateTime.Now;
+            ability.UpdatedAt = DateTime.Now;
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, ability);
+            }
+            await _context.Abilities.AddAsync(ability);
+            await _context.SaveChangesAsync();
+            return ability;
+       
+
         }
     }
 }

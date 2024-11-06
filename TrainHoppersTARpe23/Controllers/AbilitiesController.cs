@@ -23,7 +23,7 @@ namespace TrainHoppersTARpe23.Controllers
                 {
                     ID = x.ID,
                     AbilityName = x.AbilityName,
-                    AbilityType = (AbilityType)x.AbilityType,
+                    AbilityType = (Models.Abilities.AbilityType)x.AbilityType,
                     AbilityLevel = x.AbilityLevel,
                     AbilityRechargeTime = x.AbilityRechargeTime,
                 });
@@ -35,6 +35,7 @@ namespace TrainHoppersTARpe23.Controllers
             AbilityCreateViewModel vm = new();
             return View("Create",vm);
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(AbilityCreateViewModel vm)
         {
@@ -49,7 +50,7 @@ namespace TrainHoppersTARpe23.Controllers
                 AbilityUseTime = vm.AbilityUseTime,
                 AbilityStatus = (TrainHoppers.Core.Dto.AbilityStatus)vm.AbilityStatus,
                 AbilityType = (TrainHoppers.Core.Dto.AbilityType)vm.AbilityType,
-                SideEffects = vm.SideEffects,
+                //SideEffects = vm.SideEffects,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 Files = vm.Files,
@@ -61,6 +62,7 @@ namespace TrainHoppersTARpe23.Controllers
             {
                 return RedirectToAction("Index");
             }
+            return RedirectToAction("Index", vm);
         }
     }
 }
