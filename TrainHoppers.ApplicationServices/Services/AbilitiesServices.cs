@@ -37,6 +37,7 @@ namespace TrainHoppers.ApplicationServices.Services
 
         public async Task<Ability> Create(AbilityDto dto)
         {
+            //List<Core.Domain.AbilitySideEffects> abilitySideEffects = dto.SideEffects;
             Ability ability = new();
             ability.ID = Guid.NewGuid();
             ability.AbilityXP = 0;
@@ -48,7 +49,7 @@ namespace TrainHoppers.ApplicationServices.Services
             ability.AbilityUseTime = dto.AbilityUseTime;
             ability.AbilityRechargeTime = dto.AbilityRechargeTime;
 
-            //ability.SideEffects = dto.SideEffects;
+            //ability.SideEffects = abilitySideEffects;
             ability.AbilityType = (Core.Domain.AbilityType)dto.AbilityType;
             ability.CreatedAt = DateTime.Now;
             ability.UpdatedAt = DateTime.Now;

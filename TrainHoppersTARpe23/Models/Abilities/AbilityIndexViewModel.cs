@@ -24,7 +24,7 @@
         public int AbilityXP { get; set; }
         public int AbilityXPUntilNextLevel { get; set; }
         public AbilityType AbilityType { get; set; }
-        public List<AbilitySideEffects> SideEffects { get; set; }
+        //public List<AbilitySideEffects> SideEffects { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

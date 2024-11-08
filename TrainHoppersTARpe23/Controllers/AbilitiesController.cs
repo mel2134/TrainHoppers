@@ -25,9 +25,9 @@ namespace TrainHoppersTARpe23.Controllers
                     AbilityName = x.AbilityName,
                     AbilityType = (Models.Abilities.AbilityType)x.AbilityType,
                     AbilityLevel = x.AbilityLevel,
-                    AbilityRechargeTime = x.AbilityRechargeTime,
+                    AbilityStatus = (Models.Abilities.AbilityStatus)x.AbilityStatus,
                 });
-            return View();
+            return View(resultingInventory);
         }
         [HttpGet]
         public IActionResult Create()
@@ -39,6 +39,7 @@ namespace TrainHoppersTARpe23.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AbilityCreateViewModel vm)
         {
+            //List<TrainHoppers.Core.Dto.AbilitySideEffects> abilitySideEffects = new List<TrainHoppers.Core.Dto.AbilitySideEffects>() { TrainHoppers.Core.Dto.AbilitySideEffects.LessShield,TrainHoppers.Core.Dto.AbilitySideEffects.SlowerAttackSpeed};
             var dto = new AbilityDto()
             {
                 AbilityName = vm.AbilityName,
@@ -50,7 +51,7 @@ namespace TrainHoppersTARpe23.Controllers
                 AbilityUseTime = vm.AbilityUseTime,
                 AbilityStatus = (TrainHoppers.Core.Dto.AbilityStatus)vm.AbilityStatus,
                 AbilityType = (TrainHoppers.Core.Dto.AbilityType)vm.AbilityType,
-                //SideEffects = vm.SideEffects,
+               // SideEffects = abilitySideEffects,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 Files = vm.Files,

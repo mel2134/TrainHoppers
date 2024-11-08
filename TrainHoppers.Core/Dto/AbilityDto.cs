@@ -31,7 +31,7 @@ namespace TrainHoppers.Core.Dto
         public int AbilityXP { get; set; }
         public int AbilityXPUntilNextLevel { get; set; }
         public AbilityType AbilityType { get; set; }
-        public List<AbilitySideEffects> SideEffects { get; set; }
+        //public List<AbilitySideEffects> SideEffects { get; set; }
 
 
         public List<IFormFile> Files {get; set;}
