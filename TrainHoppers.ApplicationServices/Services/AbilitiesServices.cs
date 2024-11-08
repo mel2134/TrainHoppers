@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using TrainHoppers.Core.Domain;
 using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
@@ -62,6 +63,32 @@ namespace TrainHoppers.ApplicationServices.Services
             return ability;
        
 
+        }
+
+        public async Task<Ability> Update(AbilityDto dto)
+        {
+            Ability ability = new();
+            ability.ID = dto.ID;
+            ability.AbilityXP = 0;
+            ability.AbilityXPUntilNextLevel = 25;
+            ability.AbilityLevel = 0;
+            ability.AbilityStatus = (Core.Domain.AbilityStatus)dto.AbilityStatus;
+            ability.AbilityDescription = dto.AbilityDescription;
+            ability.AbilityName = dto.AbilityName;
+            ability.AbilityUseTime = dto.AbilityUseTime;
+            ability.AbilityRechargeTime = dto.AbilityRechargeTime;
+
+            //ability.SideEffects = abilitySideEffects;
+            ability.AbilityType = (Core.Domain.AbilityType)dto.AbilityType;
+            ability.CreatedAt = dto.CreatedAt;
+            ability.UpdatedAt = DateTime.Now;
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, ability);
+            }
+            _context.Abilities.Update(ability);
+            await _context.SaveChangesAsync();
+            return ability;
         }
     }
 }

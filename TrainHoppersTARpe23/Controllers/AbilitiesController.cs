@@ -98,8 +98,72 @@ namespace TrainHoppersTARpe23.Controllers
             vm.AbilityType = (Models.Abilities.AbilityType)ability.AbilityType;
             vm.Image.AddRange(images);
             return View(vm);
-
-
+        }
+        public async Task<IActionResult> Update(Guid Id)
+        {
+            if(Id == null)
+            {
+                return NotFound();
+            }
+            var ability = await _abilitiesServices.DetailsAsync(Id);
+            if (ability == null)
+            {
+                return NotFound();
+            }
+            var images = await _context.FilesToDatabase
+                .Where(x => x.AbilityID == Id)
+                .Select(
+                    y => new AbilityImageViewModel
+                    {
+                        AbilityID = y.ID,
+                        ImageID = y.ID,
+                        ImageData = y.ImageData,
+                        ImageTitle = y.ImageTitle,
+                        Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                    }).ToArrayAsync();
+            var vm = new AbilityCreateViewModel();
+            vm.ID = ability.ID;
+            vm.AbilityName = ability.AbilityName;
+            vm.AbilityDescription = ability.AbilityDescription;
+            vm.AbilityRechargeTime = ability.AbilityRechargeTime;
+            vm.AbilityUseTime = ability.AbilityUseTime;
+            vm.AbilityStatus = (Models.Abilities.AbilityStatus)ability.AbilityStatus;
+            vm.AbilityLevel = ability.AbilityLevel;
+            vm.AbilityXP = ability.AbilityXP;
+            vm.AbilityXPUntilNextLevel = ability.AbilityXPUntilNextLevel;
+            vm.AbilityType = (Models.Abilities.AbilityType)ability.AbilityType;
+            vm.CreatedAt = ability.CreatedAt;
+            vm.UpdatedAt = DateTime.Now;
+            vm.Image.AddRange(images);
+            return View("Update",vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(AbilityCreateViewModel vm)
+        {
+            var dto = new AbilityDto()
+            {
+                ID = (Guid)vm.ID,
+                AbilityName = vm.AbilityName,
+                AbilityDescription = vm.AbilityDescription,
+                AbilityXP = 0,
+                AbilityXPUntilNextLevel = 25,
+                AbilityLevel = 0,
+                AbilityRechargeTime = vm.AbilityRechargeTime,
+                AbilityUseTime = vm.AbilityUseTime,
+                AbilityStatus = (TrainHoppers.Core.Dto.AbilityStatus)vm.AbilityStatus,
+                AbilityType = (TrainHoppers.Core.Dto.AbilityType)vm.AbilityType,
+                // SideEffects = abilitySideEffects,
+                CreatedAt = vm.CreatedAt,
+                UpdatedAt = DateTime.Now,
+                Files = vm.Files,
+                Image = vm.Image.Select(x => new FileToDatabaseDto { ID = x.ImageID, ImageData = x.ImageData, ImageTitle = x.ImageTitle, AbilityID = x.AbilityID }).ToArray()
+            };
+            var result = await _abilitiesServices.Update(dto);
+            if(result == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index", vm);
         }
     }
 }

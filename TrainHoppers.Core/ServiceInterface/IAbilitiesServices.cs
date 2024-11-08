@@ -12,6 +12,6 @@ namespace TrainHoppers.Core.ServiceInterface
     {
         Task<Ability> DetailsAsync(Guid id);
         Task<Ability> Create(AbilityDto dto);
-
+        Task<Ability> Update(AbilityDto dto);
     }
 }
