@@ -69,9 +69,9 @@ namespace TrainHoppers.ApplicationServices.Services
         {
             Ability ability = new();
             ability.ID = dto.ID;
-            ability.AbilityXP = 0;
-            ability.AbilityXPUntilNextLevel = 25;
-            ability.AbilityLevel = 0;
+            ability.AbilityXP = dto.AbilityXP;
+            ability.AbilityXPUntilNextLevel = dto.AbilityXPUntilNextLevel;
+            ability.AbilityLevel = dto.AbilityLevel;
             ability.AbilityStatus = (Core.Domain.AbilityStatus)dto.AbilityStatus;
             ability.AbilityDescription = dto.AbilityDescription;
             ability.AbilityName = dto.AbilityName;
