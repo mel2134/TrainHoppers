@@ -18,6 +18,8 @@
                 <th scope="col">Type</th>
                 <th scope="col">Level</th>
                 <th scope="col">Status</th>
+                <th scope="col">Admin Actions</th>
+
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,9 @@
                         <td>@ability.AbilityType</td>
                         <td>@ability.AbilityLevel</td>
                         <td>@ability.AbilityStatus</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Abilities" asp-route-id="@ability.ID" class="btn btn-info">AbilityDetails</a>
+                        </td>
                     </tr>
                     rowNumber++;
                 }

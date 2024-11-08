@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
@@ -64,6 +65,41 @@ namespace TrainHoppersTARpe23.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index", vm);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid Id/*Guid ref*/)
+        {
+            var ability = await _abilitiesServices.DetailsAsync(Id);
+            if (ability == null)
+            {
+                return NotFound(); // Custom partial view
+            }
+            var images = await _context.FilesToDatabase
+                .Where(t => t.AbilityID == Id)
+                .Select(
+                    y => new AbilityImageViewModel
+                    {
+                        AbilityID = y.ID,
+                        ImageID = y.ID,
+                        ImageData = y.ImageData,
+                        ImageTitle = y.ImageTitle,
+                        Image = string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(y.ImageData))
+                    }).ToArrayAsync();
+            var vm = new AbilityDetailsViewModel();
+            vm.ID = ability.ID;
+            vm.AbilityName = ability.AbilityName;
+            vm.AbilityDescription = ability.AbilityDescription;
+            vm.AbilityRechargeTime = ability.AbilityRechargeTime;
+            vm.AbilityUseTime = ability.AbilityUseTime;
+            vm.AbilityStatus = (Models.Abilities.AbilityStatus)ability.AbilityStatus;
+            vm.AbilityLevel = ability.AbilityLevel;
+            vm.AbilityXP = ability.AbilityXP;
+            vm.AbilityXPUntilNextLevel = ability.AbilityXPUntilNextLevel;
+            vm.AbilityType = (Models.Abilities.AbilityType)ability.AbilityType;
+            vm.Image.AddRange(images);
+            return View(vm);
+
+
         }
     }
 }
