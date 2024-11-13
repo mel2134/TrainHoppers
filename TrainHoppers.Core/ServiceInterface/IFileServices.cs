@@ -11,5 +11,6 @@ namespace TrainHoppers.Core.ServiceInterface
     public interface IFileServices
     {
         void UploadFilesToDatabase(AbilityDto dto, Ability domain);
+        Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto);
     }
 }

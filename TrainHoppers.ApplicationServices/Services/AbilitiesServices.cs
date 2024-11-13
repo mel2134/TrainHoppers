@@ -61,7 +61,6 @@ namespace TrainHoppers.ApplicationServices.Services
             await _context.Abilities.AddAsync(ability);
             await _context.SaveChangesAsync();
             return ability;
-       
 
         }
 
@@ -89,6 +88,14 @@ namespace TrainHoppers.ApplicationServices.Services
             _context.Abilities.Update(ability);
             await _context.SaveChangesAsync();
             return ability;
+        }
+        public async Task<Ability> Delete(Guid id)
+        {
+            var res = await _context.Abilities
+                .FirstOrDefaultAsync(a => a.ID == id);
+            _context.Abilities.Remove(res);
+            await _context.SaveChangesAsync();
+            return res;
         }
     }
 }

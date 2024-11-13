@@ -11,10 +11,12 @@ namespace TrainHoppersTARpe23.Controllers
     {
         private readonly TrainHoppersContext _context;
         private readonly IAbilitiesServices _abilitiesServices;
-        public AbilitiesController(TrainHoppersContext context, IAbilitiesServices abilitiesServices)
+        private readonly IFileServices _fileServices;
+        public AbilitiesController(TrainHoppersContext context, IAbilitiesServices abilitiesServices,IFileServices fileServices)
         {
             _context = context;
             _abilitiesServices = abilitiesServices;
+            _fileServices = fileServices;
         }
         [HttpGet]
         public IActionResult Index()
@@ -164,6 +166,70 @@ namespace TrainHoppersTARpe23.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index", vm);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid ID)
+        {
+            if (ID == null)
+            {
+                return NotFound();
+            }
+            var ability = await _abilitiesServices.DetailsAsync(ID);
+            if (ability == null)
+            {
+                return NotFound();
+            }
+            var images = await _context.FilesToDatabase
+                .Where(x => x.ID == ID)
+                .Select(y => new AbilityImageViewModel
+                {
+                    AbilityID = y.ID,
+                    ImageID = y.ID,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}",Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+            var vm = new AbilityDeleteViewModel();
+            vm.ID = ability.ID;
+            vm.AbilityName = ability.AbilityName;
+            vm.AbilityDescription = ability.AbilityDescription;
+            vm.AbilityRechargeTime = ability.AbilityRechargeTime;
+            vm.AbilityUseTime = ability.AbilityUseTime;
+            vm.AbilityStatus = (Models.Abilities.AbilityStatus)ability.AbilityStatus;
+            vm.AbilityLevel = ability.AbilityLevel;
+            vm.AbilityXP = ability.AbilityXP;
+            vm.AbilityXPUntilNextLevel = ability.AbilityXPUntilNextLevel;
+            vm.AbilityType = (Models.Abilities.AbilityType)ability.AbilityType;
+            vm.CreatedAt = ability.CreatedAt;
+            vm.UpdatedAt = DateTime.Now;
+            vm.Image.AddRange(images);
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirm(Guid ID)
+        {
+            var ability = await _abilitiesServices.Delete(ID);
+            if (ability == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> removeImage(AbilityImageViewModel vm)
+        {
+            var dto = new FileToDatabaseDto()
+            {
+                ID = vm.ImageID
+            };
+            var image = await _fileServices.RemoveImageFromDatabase(dto);
+            if (image == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+
+
         }
     }
 }

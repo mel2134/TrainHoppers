@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +44,20 @@ namespace TrainHoppers.ApplicationServices.Services
                     }
                 }
             }
+        }
+        public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
+        {
+            var imgId = await _context.FilesToDatabase
+                .FirstOrDefaultAsync(x=>x.ID == dto.ID);
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imgId.ImageData;
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            _context.FilesToDatabase
+                .Remove(imgId);
+            await _context.SaveChangesAsync();
+            return null;
         }
 
     }
