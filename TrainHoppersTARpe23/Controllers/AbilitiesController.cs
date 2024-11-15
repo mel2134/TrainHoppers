@@ -158,7 +158,7 @@ namespace TrainHoppersTARpe23.Controllers
                 CreatedAt = vm.CreatedAt,
                 UpdatedAt = DateTime.Now,
                 Files = vm.Files,
-                Image = vm.Image.Select(x => new FileToDatabaseDto { ID = x.ImageID, ImageData = x.ImageData, ImageTitle = x.ImageTitle, AbilityID = x.AbilityID }).ToArray()
+                Image = vm.Image.Select(x => new FileToDatabaseDto { ID = x.ImageID, ImageData = x.ImageData, ImageTitle = x.ImageTitle, PowerupID = x.AbilityID }).ToArray()
             };
             var result = await _abilitiesServices.Update(dto);
             if(result == null)

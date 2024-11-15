@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAbilitiesServices, AbilitiesServices> ();
 builder.Services.AddScoped<IFileServices, FileServices>();
+builder.Services.AddScoped<IPowerupsServices, PowerupServices>();
 builder.Services.AddDbContext<TrainHoppersContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );

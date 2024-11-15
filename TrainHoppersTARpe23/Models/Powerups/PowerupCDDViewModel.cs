@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TrainHoppersTARpe23.Models.Powerups;
 
-namespace TrainHoppers.Core.Domain
+namespace TrainHoppersTARpe23.Models.Powerups
 {
-    public enum PowerupType
+    public class PowerupCDDViewModel
     {
-        Heal, PlotArmor, Ressurect, WhiteFlag, CarrotMayhem
-    }
-    public class Powerup
-    {
-        public Guid ID { get; set; }
+        public Guid? ID { get; set; }
         public string PowerUpName { get; set; }
         public string PowerUpDescription { get; set; }
         public int TotalUses { get; set; }
         public int UsedTime { get; set; }
         public PowerupType PowerupType { get; set; }
+        public List<IFormFile> Files { get; set; }
+        public List<PowerupImageViewModel> Image { get; set; } = new List<PowerupImageViewModel>();
+
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
     }
 }

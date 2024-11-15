@@ -12,5 +12,8 @@
         public int TotalUses { get; set; }
         public int UsedTime { get; set; }
         public PowerupType PowerupType { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
