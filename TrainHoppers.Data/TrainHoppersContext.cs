@@ -12,6 +12,7 @@ namespace TrainHoppers.Data
     {
         public TrainHoppersContext(DbContextOptions<TrainHoppersContext> options) : base(options) {}
         public DbSet<Ability> Abilities { get; set; }
+        public DbSet<Powerup> Powerups { get; set; }
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
     }
 }

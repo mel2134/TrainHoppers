@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TrainHoppersTARpe23.Models.Powerups.PowerupIndexViewModel>
+
+@{
+    int rowNumber = 1;
+}
+<div>
+
+</div>
+
+<div class="h1">Your powerups</div>
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Description</th>
+                <th scope="col">Admin Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var powerup in Model)
+                {
+                    <tr>
+                        <td>@rowNumber</td>
+                        <td>@powerup.PowerUpName</td>
+                        <td>@powerup.PowerupType</td>
+                        <td>@powerup.PowerUpDescription</td>
+                        <td></td>
+                    </tr>
+                    rowNumber++;
+                }
+            }
+        </tbody>
+    </table>
+</form>
+@*Missing button for player profile*@
+@*Missing button for player fight history*@
