@@ -216,11 +216,11 @@ namespace TrainHoppersTARpe23.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> removeImage(AbilityImageViewModel vm)
+        public async Task<IActionResult> removeImage(Guid ID)
         {
             var dto = new FileToDatabaseDto()
             {
-                ID = vm.ImageID
+                ID = ID
             };
             var image = await _fileServices.RemoveImageFromDatabase(dto);
             if (image == null)

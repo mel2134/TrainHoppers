@@ -48,7 +48,7 @@ namespace TrainHoppers.ApplicationServices.Services
         public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
         {
             var imgId = await _context.FilesToDatabase
-                .FirstOrDefaultAsync(x=>x.ID == dto.ID);
+                .FirstOrDefaultAsync(x => x.ID == dto.ID);
             var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imgId.ImageData;
             if (File.Exists(filePath))
             {
