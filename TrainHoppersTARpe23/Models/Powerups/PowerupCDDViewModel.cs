@@ -1,5 +1,6 @@
 ﻿using TrainHoppersTARpe23.Models.Powerups;
 
+// Create,Delete,Details
 namespace TrainHoppersTARpe23.Models.Powerups
 {
     public class PowerupCDDViewModel
@@ -8,7 +9,7 @@ namespace TrainHoppersTARpe23.Models.Powerups
         public string PowerUpName { get; set; }
         public string PowerUpDescription { get; set; }
         public int TotalUses { get; set; }
-        public int UsedTime { get; set; }
+        public int UsesLeft { get; set; }
         public PowerupType PowerupType { get; set; }
         public List<IFormFile> Files { get; set; }
         public List<PowerupImageViewModel> Image { get; set; } = new List<PowerupImageViewModel>();

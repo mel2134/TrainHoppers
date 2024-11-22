@@ -37,6 +37,9 @@
             }
         </div>
     </dl>
-
-    <a asp-action="Index" asp-controller="Powerups" class="btn btn-secondary">Back to powerups</a>
+    <form asp-action="DeleteConfirm">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" asp-controller="Powerups" class="btn btn-secondary">Back to powerups</a>
+    </form>
 </div>

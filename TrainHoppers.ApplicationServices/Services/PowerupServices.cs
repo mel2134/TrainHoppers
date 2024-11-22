@@ -47,5 +47,14 @@ namespace TrainHoppers.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.ID == id);
             return result;
         }
+
+        public async Task<Powerup> Delete(Guid Id)
+        {
+            var res = await _context.Powerups
+                .FirstOrDefaultAsync(a => a.ID == Id);
+            _context.Powerups.Remove(res);
+            await _context.SaveChangesAsync();
+            return res;
+        }
     }
 }

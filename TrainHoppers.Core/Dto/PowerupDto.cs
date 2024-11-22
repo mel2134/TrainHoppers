@@ -14,7 +14,7 @@ namespace TrainHoppers.Core.Dto
         public string PowerUpName { get; set; }
         public string PowerUpDescription { get; set; }
         public int TotalUses { get; set; }
-        public int UsedTime { get; set; }
+        public int UsesLeft { get; set; }
         public PowerupType PowerupType { get; set; }
         public List<IFormFile> Files { get; set; }
         public IEnumerable<FileToDatabaseDto> Image { get; set; } = new List<FileToDatabaseDto>();
