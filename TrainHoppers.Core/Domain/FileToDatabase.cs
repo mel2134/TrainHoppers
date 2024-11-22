@@ -12,6 +12,6 @@ namespace TrainHoppers.Core.Domain
         public string ImageTitle { get; set; }
         public byte[] ImageData { get; set; }
         public Guid? AbilityID { get; set; }
-        public Guid? PowerupID { get; set; } //CHANGE!!!!!!!!!!
+        public Guid? PowerupID { get; set; }
     }
 }
