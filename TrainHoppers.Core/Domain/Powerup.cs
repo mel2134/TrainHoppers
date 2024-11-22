@@ -8,7 +8,7 @@ namespace TrainHoppers.Core.Domain
 {
     public enum PowerupType
     {
-        Heal, PlotArmor, Ressurect, WhiteFlag, CarrotMayhem
+        Heal, PlotArmor, Ressurect, WhiteFlag, CarrotMayhem, Smoke, BunnyHop, Airstrike, InstantReload
     }
     public class Powerup
     {
