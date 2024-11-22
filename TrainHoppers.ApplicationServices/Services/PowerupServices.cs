@@ -29,6 +29,7 @@ namespace TrainHoppers.ApplicationServices.Services
             powerup.PowerUpName = dto.PowerUpName;
             powerup.PowerUpDescription = dto.PowerUpDescription;
             powerup.PowerupType = dto.PowerupType;
+            powerup.UsesLeft = dto.UsesLeft;
             powerup.CreatedAt = DateTime.Now;
             powerup.UpdatedAt = DateTime.Now;
 

@@ -31,6 +31,7 @@ namespace TrainHoppersTARpe23.Controllers
                     PowerUpName = x.PowerUpName,
                     PowerupType = (PowerupType)x.PowerupType,
                     PowerUpDescription = x.PowerUpDescription,
+                    UsesLeft = x.UsesLeft,
 
                 });
             return View(resultingInventory);
@@ -50,7 +51,7 @@ namespace TrainHoppersTARpe23.Controllers
                 PowerUpName = vm.PowerUpName,
                 PowerUpDescription = vm.PowerUpDescription,
                 PowerupType = (TrainHoppers.Core.Domain.PowerupType)vm.PowerupType,
-                // SideEffects = abilitySideEffects,
+                UsesLeft=vm.UsesLeft,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 Files = vm.Files,

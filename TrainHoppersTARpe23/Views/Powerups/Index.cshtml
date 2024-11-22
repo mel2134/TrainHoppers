@@ -18,6 +18,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">Description</th>
+                <th scope="col">Times left to use</th>
                 <th scope="col">Admin Actions</th>
 
             </tr>
@@ -32,6 +33,7 @@
                         <td>@powerup.PowerUpName</td>
                         <td>@powerup.PowerupType</td>
                         <td>@powerup.PowerUpDescription</td>
+                        <td>@powerup.UsesLeft</td>
                         <td>
                             <a asp-action="Details" asp-controller="Powerups" asp-route-id="@powerup.ID" class="btn btn-info">Details</a>
                             <br />
