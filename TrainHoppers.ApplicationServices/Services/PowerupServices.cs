@@ -57,5 +57,25 @@ namespace TrainHoppers.ApplicationServices.Services
             await _context.SaveChangesAsync();
             return res;
         }
+        public async Task<Powerup> Update(PowerupDto dto)
+        {
+            Powerup powerup = new();
+            powerup.ID = dto.ID;
+            powerup.PowerUpName = dto.PowerUpName;
+            powerup.PowerUpDescription = dto.PowerUpDescription;
+            powerup.PowerupType = dto.PowerupType;
+            powerup.UsesLeft = dto.UsesLeft;
+            powerup.TotalUses = dto.TotalUses;
+
+            powerup.CreatedAt = dto.CreatedAt;
+            powerup.UpdatedAt = DateTime.Now;
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, powerup);
+            }
+            _context.Powerups.Update(powerup);
+            await _context.SaveChangesAsync();
+            return powerup;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using TrainHoppersTARpe23.Models.Powerups;
 
-// Create,Delete,Details
+// Create,Delete,Details,Update all use this viewmodel
 namespace TrainHoppersTARpe23.Models.Powerups
 {
     public class PowerupCDDViewModel

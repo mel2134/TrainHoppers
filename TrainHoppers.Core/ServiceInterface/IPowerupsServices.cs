@@ -13,5 +13,6 @@ namespace TrainHoppers.Core.ServiceInterface
         Task<Powerup> Create(PowerupDto dto);
         Task<Powerup> DetailsAsync(Guid id);
         Task<Powerup> Delete(Guid Id);
+        Task<Powerup> Update(PowerupDto dto);
     }
 }
