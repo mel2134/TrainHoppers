@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TrainHoppers.ApplicationServices.Services;
+using TrainHoppers.Core.Domain;
 using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
@@ -60,6 +63,32 @@ namespace TrainHoppersTARpe23.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index", vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid Id)
+        {
+            var powerup = await _powerupServices.DetailsAsync(Id);
+            if (powerup == null)
+            {
+                return NotFound();
+            }
+            var images = await _context.FilesToDatabase
+                .Where(t => t.PowerupID == Id)
+                .Select(
+                    y => new PowerupImageViewModel
+                    {
+                        PowerupID = y.ID,
+                        ImageID = y.ID,
+                        ImageData = y.ImageData,
+                        ImageTitle = y.ImageTitle,
+                        Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                    }).ToArrayAsync();
+            var vm = new PowerupCDDViewModel();
+            vm.ID = powerup.ID;
+
+            return View(vm);
+
         }
     }
 }

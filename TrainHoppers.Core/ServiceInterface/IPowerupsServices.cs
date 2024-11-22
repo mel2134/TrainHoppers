@@ -11,5 +11,6 @@ namespace TrainHoppers.Core.ServiceInterface
     public interface IPowerupsServices
     {
         Task<Powerup> Create(PowerupDto dto);
+        Task<Powerup> DetailsAsync(Guid id);
     }
 }

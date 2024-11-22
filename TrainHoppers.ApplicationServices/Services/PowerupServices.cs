@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,12 @@ namespace TrainHoppers.ApplicationServices.Services
             await _context.SaveChangesAsync();
             return powerup;
 
+        }
+        public async Task<Powerup> DetailsAsync(Guid id)
+        {
+            var result = await _context.Powerups
+                .FirstOrDefaultAsync(x => x.ID == id);
+            return result;
         }
     }
 }

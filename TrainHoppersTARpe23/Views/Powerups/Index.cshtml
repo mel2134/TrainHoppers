@@ -32,7 +32,13 @@
                         <td>@powerup.PowerUpName</td>
                         <td>@powerup.PowerupType</td>
                         <td>@powerup.PowerUpDescription</td>
-                        <td></td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Powerups" asp-route-id="@powerup.ID" class="btn btn-info">Details</a>
+                            <br />
+                            <a asp-action="Update" asp-controller="Powerups" asp-route-id="@powerup.ID" class="btn btn-info">Update</a>
+                            <br />
+                            <a asp-action="Delete" asp-controller="Powerups" asp-route-id="@powerup.ID" class="btn btn-info">Delete</a>
+                        </td>
                     </tr>
                     rowNumber++;
                 }
