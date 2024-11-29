@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TrainHoppers.ApplicationServices.Services;
+using TrainHoppers.Core.Domain;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
+using TrainHoppersTARpe23.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +12,34 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAbilitiesServices, AbilitiesServices> ();
 builder.Services.AddScoped<IFileServices, FileServices>();
+builder.Services.AddScoped<IAccountsServices, AccountsServices> ();
 builder.Services.AddDbContext<TrainHoppersContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+   { 
+       options.SignIn.RequireConfirmedAccount = true;
+       options.Password.RequiredLength = 3;
+       options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+       options.Lockout.MaxFailedAccessAttempts = 3;
+       options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+   })
+    .AddEntityFrameworkStores<TrainHoppersContext>()
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
+    .AddDefaultUI();
+
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(
+    options => options.TokenLifespan = TimeSpan.FromHours(5)
+    );
+
+builder.Services.Configure<CustomEmailConfirmationTokenProviderOptions>(
+    options => options.TokenLifespan = TimeSpan.FromDays(3)
+    );
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
