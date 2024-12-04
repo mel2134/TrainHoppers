@@ -1,5 +1,17 @@
-.THbgcRED{
+.orange-text-glow{
     color: red;
     text-shadow: rgba(255,170,0,0.9) 0px 0px 16px;
 }
-	
+
+.button-orange {
+    background-color:orange;
+    border: orange;
+    color: #955252;
+}
+
+.button-orange:hover {
+        background-color: rgba(191, 126, 6, 0.605);
+        color: #9f0000;
+        background-image: -webkit-linear-gradient(bottom, orange, rgb(255, 0, 0)); 
+        background-position: unset;  
+}
