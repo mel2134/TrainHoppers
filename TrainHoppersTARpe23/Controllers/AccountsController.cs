@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using TrainHoppers.ApplicationServices.Services;
 using TrainHoppers.Core.Domain;
+using TrainHoppers.Core.Dto;
+using TrainHoppers.Core.Dto.AccountsDtos;
+using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
+using TrainHoppersTARpe23.Models;
 using TrainHoppersTARpe23.Models.Accounts;
 
 namespace TrainHoppersTARpe23.Controllers
@@ -12,11 +18,13 @@ namespace TrainHoppersTARpe23.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly TrainHoppersContext _context;
-        public AccountsController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, TrainHoppersContext context)
+        private readonly IEmailsServices _emailsService;
+        public AccountsController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, TrainHoppersContext context, IEmailsServices emailsService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _emailsService = emailsService;
         }
         [HttpGet]
         public async Task<IActionResult> AddPassword()
@@ -178,6 +186,7 @@ namespace TrainHoppersTARpe23.Controllers
                     Email = model.Email,
                     City = model.City,
                 };
+
                 var result = await _userManager.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
@@ -187,9 +196,16 @@ namespace TrainHoppersTARpe23.Controllers
                     {
                         return RedirectToAction("ListUsers","Administrations");
                     }
+                    EmailTokenDto signUp = new();
+                    signUp.Token = token;
+                    signUp.Body = $"Please confirm your email by clicking on this <a href='{confirmLink}'>LINK</a>";
+                    signUp.Subject = "Successfully signed up!";
+                    signUp.To = user.Email;
+
+                    _emailsService.SendEmailToken(signUp,token);
                     ViewBag.ErrorTitle = "Successfully registered";
                     ViewBag.ErrorMessage = "Before you can login, please confirm your email. An email has been sent to you.";
-                    return View("Error");
+                    return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
                 }
                 foreach (var error in result.Errors)
                 {

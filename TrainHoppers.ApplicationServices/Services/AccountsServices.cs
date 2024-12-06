@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainHoppers.Core.Domain;
+using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.Dto.AccountsDtos;
 using TrainHoppers.Core.ServiceInterface;
 
@@ -15,10 +16,12 @@ namespace TrainHoppers.ApplicationServices.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountsServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly IEmailsServices _emailsServices;
+        public AccountsServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailsServices emailsServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailsServices = emailsServices;
         }
         public async Task<ApplicationUser> Register(ApplicationUserDto dto)
         {
@@ -32,6 +35,7 @@ namespace TrainHoppers.ApplicationServices.Services
             if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                _emailsServices.SendEmailToken(new EmailTokenDto(),token);
             }
             return user;
         }
