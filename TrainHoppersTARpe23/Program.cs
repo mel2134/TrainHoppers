@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAbilitiesServices, AbilitiesServices> ();
 builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IAccountsServices, AccountsServices> ();
+builder.Services.AddScoped<IEmailsServices, EmailsServices>();
 builder.Services.AddDbContext<TrainHoppersContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
