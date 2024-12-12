@@ -11,5 +11,6 @@ namespace TrainHoppers.Data
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
         public DbSet<IdentityRole> IdentityRoles { get; set; }
+        public DbSet<PlayerProfile> PlayerProfiles { get; set; }
     }
 }

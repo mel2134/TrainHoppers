@@ -263,8 +263,11 @@ namespace TrainHoppersTARpe23.Controllers
                 Image = vm.AddedAbility.Image.Select(x => new FileToDatabaseDto { ID = x.ID, ImageData = x.ImageData, ImageTitle = x.ImageTitle, AbilityID = x.AbilityID }).ToArray()
 
             };
-            var result = await _storiesServices.Create(dto);
-            if (result == null)
+            //var result = await _storiesServices.Create(dto);
+            // STUB needs stories services, a story to utilize, storiescontroller to function
+            //var result = null;
+
+            if (null == null)
             {
                 return RedirectToAction("Index");
             }
