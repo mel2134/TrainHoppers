@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TrainHoppers.Core.Domain;
 using TrainHoppers.Core.Dto;
 using TrainHoppers.Core.ServiceInterface;
 using TrainHoppers.Data;
 using TrainHoppersTARpe23.Models.Abilities;
+using TrainHoppersTARpe23.Models.Stories;
 
 namespace TrainHoppersTARpe23.Controllers
 {
@@ -231,5 +233,43 @@ namespace TrainHoppersTARpe23.Controllers
 
 
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRandomAbilityOwnership(AbilityOwnershipFromStoryViewModel vm)
+        {
+            int rng = new Random().Next(1, _context.Abilities.Count());
+
+
+
+            var source =  _context.Abilities.OrderByDescending(x=>x.AbilityName).Take(rng);
+            
+            var dto = new AbilityOwnershipDto()
+            {
+                AbilityName = vm.AddedAbility.AbilityName,
+                AbilityDescription = vm.AddedAbility.AbilityDescription,
+                AbilityXP = 0,
+                AbilityXPUntilNextLevel = 25,
+                AbilityLevel = 0,
+                AbilityRechargeTime = vm.AddedAbility.AbilityRechargeTime,
+                AbilityUseTime = vm.AddedAbility.AbilityUseTime,
+                AbilityStatus = (TrainHoppers.Core.Dto.AbilityStatus)vm.AddedAbility.AbilityStatus,
+                AbilityType = (TrainHoppers.Core.Dto.AbilityType)vm.AddedAbility.AbilityType,
+                // SideEffects = abilitySideEffects,
+                OwnershipCreatedAt = DateTime.Now,
+                OwnershipUpdatedAt = DateTime.Now,
+                Files = vm.AddedAbility.Files,
+                Image = vm.AddedAbility.Image.Select(x => new FileToDatabaseDto { ID = x.ID, ImageData = x.ImageData, ImageTitle = x.ImageTitle, AbilityID = x.AbilityID }).ToArray()
+
+            };
+            var result = await _storiesServices.Create(dto);
+            if (result == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index", vm);
+        }
+
     }
 }
